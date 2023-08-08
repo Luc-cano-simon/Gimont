@@ -1,0 +1,757 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+/* @import url("https://fonts.googleapis.com/css?family=Rouge Script"); */
+
+
+@import url("https://use.typekit.net/aun4bec.css");
+
+
+
+/* @font-face {
+	font-family: "finalSix";
+	src: url("~assets/fonts/FinalSix-Book.woff") format("truetype");
+	font-display: swap;
+	font-weight: 200;
+}
+
+
+
+@font-face {
+	font-family: "finalSix2";
+	src: url("~assets/fonts/FinalSix-Book.woff2") format("truetype");
+	font-display: swap;
+	font-weight: 200;
+}
+
+@font-face {
+	font-family: "finalSixlight";
+	src: url("~assets/fonts/FinalSix-Light.woff") format("truetype");
+	font-display: swap;
+	font-weight: 200;
+}
+
+@font-face {
+	font-family: "finalSixMedium";
+	src: url("~assets/fonts/FinalSix-Medium.woff") format("truetype");
+	font-display: swap;
+	font-weight: 200;
+}
+@font-face {
+	font-family: "test";
+	src: url("~assets/fonts/FinalSix-Thin.woff2") format("truetype");
+	font-display: swap;
+	font-weight: 200;
+} */
+
+
+
+@font-face{
+    font-family : "Thesignature";
+    src : url('/assets/fonts/Thesignature.ttf') format("truetype");
+}
+
+/* @font-face {
+	font-family: myFirstFont;
+	src: url(sansation_light.woff);
+  } */
+
+
+#app {
+	font-family: "finalSix", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 18px;
+}
+
+.p-relative{
+	position:relative;
+}
+
+
+.btn-print-share{
+    position: absolute;
+    top: -62px;
+    right: 5vw;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@media all and (max-width: 1750px) {
+	#app {
+		font-size: 18px;
+	}
+}
+
+@media all and (max-width: 1750px) {
+	#app {
+		font-size: 18px;
+	}
+}
+
+@media all and (max-width: 1500px) {
+	#app {
+		font-size: 16px;
+	}
+}
+
+::-webkit-scrollbar {
+	width: 18px;
+}
+
+::-webkit-scrollbar-track {
+	background: #eee;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--color-identity);
+	border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--color-third);
+}
+
+:root {
+	color-scheme: normal !important;
+
+	scrollbar-color: var(--color-identity) #eee;
+	scrollbar-width: 18px;
+
+	--color-identity: #d9bb56;
+	--color-secondary: #e8d596;
+	--color-third: #c9a11d;
+	--color-identity-50: rgba(217, 186, 86, 0.5);
+	--color-identity-75: rgba(217, 186, 86, 0.75);
+	--text-col: #312d2d;
+	--title-col: #3D4550;
+	--placeholder-color: #b8b8b8;
+	--color-sec: rgb(45, 108, 154);
+	--error-color: rgb(204, 44, 44);
+
+	--container-space: 6%;
+	overflow-x: hidden;
+}
+
+.blue {
+	color: var(--color-sec) !important;
+}
+
+.site_container {
+	margin: 0 var(--container-space);
+	width: calc(100% - var(--container-space) * 2);
+}
+
+.oops {
+	margin-top: 6rem;
+	text-align: center;
+}
+
+/* @media (max-width: 2200px) {
+	:root {
+		--container-space: 5%;
+	}
+} */
+@media (max-width: 1550px) {
+	:root {
+		--container-space: 4%;
+	}
+}
+
+@media (max-width: 1290px) {
+
+}
+
+@media (max-width: 1200px) {
+	:root {
+		--container-space: 1rem;
+	}
+}
+
+@media (max-width: 1000px) {
+	:root {
+		--container-space: 8px;
+	}
+}
+
+@media all and (max-width: 1000px) {
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	:root {
+		scrollbar-width: 8px;
+	}
+}
+
+.text_col {
+	color: var(--color-identity);
+}
+
+.__nuxt-error-page {
+	z-index: 100;
+}
+
+html,
+body {
+	scroll-behavior: smooth;
+	margin: 0;
+	color: var(--text-col);
+	background: #F6F6F6;
+	/* overflow-x: hidden; */
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+
+p {
+	margin: 0;
+}
+
+.headerNav{
+	height: 160px;
+}
+
+.nuxt-link-exact-active {
+	opacity: 0.6;
+	pointer-events: none;
+}
+
+.fade_page-enter-active,
+.fade_page-leave-active {
+	transition: opacity 0.2s;
+}
+
+.fade_page-enter,
+.fade_page-leave-active {
+	opacity: 0;
+}
+
+.site_title {
+	text-align: center;
+	font-size: 4em;
+	color: var(--title-col);
+	margin: 0.5em 0;
+}
+
+.site_sm_title {
+	font-size: 1.7em;
+	margin-bottom: 0.5em;
+	color: var(--title-col);
+}
+
+.site_container {
+	margin: 0 6%;
+	width: 88%;
+}
+
+@media all and (max-width: 1550px) {
+	.site_container {
+		margin: 0 4%;
+		width: calc(100% - 8%);
+	}
+}
+
+@media all and (max-width: 1200px) {
+	.site_container {
+		width: calc(100% - 2rem);
+		margin: 0 1rem;
+	}
+
+	html,
+	body {
+	
+		overflow-x: hidden;
+	}
+}
+
+@media all and (max-width: 990px) {
+	.site_container {
+		width: calc(100% - 16px);
+		margin: 0 8px;
+	}
+}
+
+.btn {
+	font-weight: bold;
+	text-transform: uppercase;
+	background: white;
+	border-radius: 8px;
+	padding: 0.3em 1em;
+	display: block;
+	width: fit-content;
+	transition: all 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+.btn.active,
+.btn:hover {
+	background: var(--color-identity);
+}
+
+.btn.active.big {
+	border: 3px solid var(--color-identity);
+	padding: 0.5em 2.4em;
+}
+
+.btn.active:hover {
+	background: white;
+}
+
+/* .newspaper_style {
+	margin-top: 4em;
+	columns: 2 300px;
+	-webkit-column-gap: 50px;
+	-moz-column-gap: 50px;
+	column-gap: 200px;
+}
+.newspaper_style > * {
+	-webkit-column-break-inside: avoid;
+	page-break-inside: avoid;
+	break-inside: avoid-column;
+	display: table;
+}
+.newspaper_style article > img {
+	width: 100%;
+	border-radius: 20px;
+	border: 2px gray solid;
+	margin: 1em 0;
+	display: block;
+}
+.newspaper_style article p {
+	font-weight: 500;
+	font-size: 0.9em;
+	line-height: 1.4em;
+	color: var(--text-col);
+} */
+
+.arianne {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    margin-bottom: 9vh;
+    margin-left: 7.9vw;
+    /* margin-top: -7vh; */
+}
+
+.arianne>* {
+	font-size: 1em;
+	font-weight: 500;
+	display: contents;
+	margin: 0;
+	color: var(--title-col);
+	text-transform: initial;
+	font-weight: normal;
+}
+
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
+.container-page-accueil{
+	margin-left: 6rem;
+	margin-right: 6rem;
+}
+
+.titre-page{
+	margin: 3rem 7.9vw;
+    /* margin-bottom: 3rem; */
+    position: relative;
+}
+
+.contenu-page{
+	margin: 0rem 7.9vw;
+    position: relative;
+}
+
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+.page h2 {
+	text-transform: uppercase;
+	font-size: 2em;
+	color: var(--text-col);
+	border-bottom: 3px solid #cfcfd0;
+}
+
+.pageX {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.pageX>* {
+	flex: 2 1 320px;
+	margin-left: 5%;
+}
+
+.pageX .petitTitre {
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 1.3em;
+}
+
+.petitBloc {
+	margin-bottom: 1em;
+}
+
+.pdfBloc p {
+	margin: 1em 0;
+	font-weight: bold;
+}
+
+.archiveBtns {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	margin: 2em 0;
+}
+
+.archiveBtns>* {
+	border: 3px #000 solid;
+	border-radius: 10px;
+	font-weight: bold;
+	padding: 0.5em 1em;
+	margin: 0.5em 0.5em 0.5em 0;
+	text-transform: uppercase;
+}
+
+.horaires span {
+	padding: 0 0.5em;
+}
+
+/* pour les scroll to anchor, permet  de compenser la taille du menu */
+.anchorReference {
+	position: absolute;
+	top: -200px;
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+.bandeauInfos {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.bandeauInfos>* {
+	flex: 1 1 320px;
+	display: flex;
+	flex-direction: column;
+	font-weight: 700;
+	margin: 1em;
+}
+
+.bandeauInfos>* p,
+.bandeauInfos>* a {
+	margin-bottom: 1.5em;
+}
+
+.bandeauInfos h3 {
+	margin: 0 0 0.9em;
+	font-weight: 700;
+	font-size: 1.4em;
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+.link_out {
+	color: #2e9cb1;
+}
+
+.grid_contact {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+	gap: 1em;
+	grid-auto-flow: row dense;
+	margin-bottom: 2em;
+	/* grid-auto-rows: 180px; */
+}
+
+.grid_contact>div {
+	background: #eee;
+	padding: 1em;
+}
+
+.grid_contact h4 {
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.grid_logement {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(500px, 2fr));
+	gap: 1em;
+	grid-auto-flow: row dense;
+	margin-bottom: 2em;
+	/* grid-auto-rows: 180px; */
+}
+
+.grid_logement>div {
+	background: #eee;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1em;
+}
+
+.grid_logement h4 {
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.textBlock {
+	margin-top: 2rem;
+	text-align: justify;
+}
+
+.textBlock>p {
+	margin-bottom: 1rem
+}
+
+/* [id]::before {
+	content: '';
+	display: block;
+	height: 100px;
+	margin-top: -100px;
+	visibility: hidden;
+} */
+
+.links {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.alignCenter {
+	display: flex;
+	align-items: center;
+}
+
+.btn-rdv{
+    background-color: #F5CB38;
+    border: 1px solid #F5CB38;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    /* margin:2rem 0 ; */
+    transition: all 0.7;
+}
+.btn-rdv:hover{
+    background-color: transparent;
+    border: 1px solid #F5CB38;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    transform: rotate(-15deg);
+}
+
+.box-pdf .btn-pdf{
+    background-color: #b93239;
+    border: 1px solid #b93239;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    /* margin:2rem 0 ; */
+    transition: all 0.7;
+	color: white;
+	/* position: absolute;
+    top: -17%;
+    right: 15%; */
+}
+
+.box-pdf .btn-pdf:hover{
+    background-color: transparent;
+    border: 1px solid #b93239;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    transform: rotate(-15deg);
+}
+
+.box-pdf .btn-pdf:nth-child(2){
+    background-color: #b93239;
+    border: 1px solid #b93239;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    margin:2rem 0 ;
+    transition: all 0.7;
+	color: white;
+	/* position: absolute;
+    top: 50%;
+    right: 15%; */
+}
+
+.box-pdf .btn-pdf:hover{
+    background-color: transparent;
+    border: 1px solid #b93239;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    transform: rotate(-15deg);
+}
+
+
+
+
+.box-sous-cat-btn .btn-rdv{
+    background-color: #F5CB38;
+    border: 1px solid #F5CB38;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    margin:2rem 0 ;
+    transition: all 0.7;
+	position: absolute;
+    top: -57px;
+    right: 15%;
+}
+
+.box-sous-cat-btn .btn-rdv:hover{
+    background-color: transparent;
+    border: 1px solid #F5CB38;
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    transform: rotate(-15deg);
+}
+
+.gallery img {
+    width: 145px;
+    height: 105px;
+	margin-bottom: 2rem;
+}
+
+.align-flex{
+	display: flex;
+	align-items: center;
+}
+
+.lien-no-animations{
+	transition: all 0.7s;
+    text-decoration: none;
+    color: #CC9A55;
+}
+.lien-no-animations:hover{
+	/* padding-left: 10px; */
+	text-decoration: none;
+	color: #CC9A55;
+}
+
+.lien-animations{
+	transition: all 0.7s;
+    text-decoration: none;
+    color: #CC9A55;
+}
+.lien-animations:hover{
+	color: #CC9A55;
+	padding-left: 10px;
+	text-decoration: none;
+}
+
+
+.gallery{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.gallery img {
+   width: 145px;
+   height:105px;
+   object-fit: cover;
+}
+
+.maj{
+	text-transform: uppercase;
+}
+
+@media (max-width: 500px) {
+	.container-page-accueil {
+		margin-left: 1rem;
+		margin-right: 1rem;
+	}
+	.polygon{
+		clip-path: none !important;
+	}
+	.polygon  .contenu-droite{
+		position: initial;
+	}
+} 
+
+@media (max-width: 1000px) {
+	.logo-fond-gimont{
+		display: none;
+	}
+
+} 
+@media (max-width: 1100px) {
+    #particulier .box-sous-cat-btn .btn-rdv,
+	#particulier .box-pdf .btn-pdf:nth-child(2){
+		position: initial;
+		margin: auto;
+	}
+} 
+@media (max-width: 768px) {
+	.headerNav{
+		height: auto;
+	}
+} 
+
+@media (max-width: 600px) {
+    .galerie-images {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+
+@media print {
+    .headerNav,
+    #arianne,
+    .TheFooter{
+        display:none;
+    }
+
+}

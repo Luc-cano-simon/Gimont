@@ -1,0 +1,1059 @@
+<template>
+	<div>
+		<div id="app">
+			<header
+				class="headerNav"
+				:class="$store.state.scrollY > 0 ? 'shrinkedhead' : null"
+			>
+				<!-- MENU PC -->
+				<nav class="menu_pc">
+					<div
+						class="mainLink"
+						v-for="(item, index) in nav"
+						:key="index"
+					>
+						<nuxt-link
+							v-if="item.is_link !== null"
+							:to="item.is_link ? item.lien : '#'"
+							:title="item.title"
+							:class="item.class"
+						>
+							{{ item.title }}
+							<img
+								src="/img/fontawesome/angle-right-w.svg"
+								alt="angle droit"
+								width="10"
+								v-if="item.sub"
+							/>
+						</nuxt-link>
+						<p v-else :title="item.title" :class="item.class">
+							{{ item.title }}
+							<img
+								src="/img/fontawesome/angle-right-w.svg"
+								alt="angle droit"
+								width="10"
+								v-if="item.sub"
+							/>
+						</p>
+
+						<div class="subLink" v-if="item.sub">
+							<div
+								class="sublinkItem"
+								v-for="(j, jndex) in item.sub"
+								:key="jndex"
+							>
+								<nuxt-link
+									v-if="j.is_link !== null"
+									:to="
+										j.is_link
+											? `${
+													item.lien
+											  }/${$utils.stringForUrl(j.title)}`
+											: '#'
+									"
+									:title="j.title"
+								>
+									{{ j.title }}
+									<img
+										src="/img/fontawesome/angle-right-w.svg"
+										alt="angle droit"
+										width="9"
+										v-if="j.sub"
+									/>
+								</nuxt-link>
+								<p v-else :title="j.title">
+									{{ j.title }}
+									<img
+										src="/img/fontawesome/angle-right-w.svg"
+										alt="angle droit"
+										width="10"
+										v-if="j.sub"
+									/>
+								</p>
+								<div class="subSubLink">
+									<nuxt-link
+										v-for="(k, kndex) in j.sub"
+										:key="kndex"
+										:to="getDeepUrl(item.lien, j.title, k)"
+										:title="k.title"
+										>{{ k.title }}
+									</nuxt-link>
+								</div>
+							</div>
+						</div>
+					</div>
+				</nav>
+
+				<!-- MENU MOBILE -->
+				<div
+					class="bkgMenuMonile"
+					v-if="$store.state.showMenu"
+					@click="$store.commit('toggleBoolean', 'showMenu')"
+				></div>
+				<nav
+					class="menu_mobile"
+					v-if="
+						$store.state.showMenu &&
+						$store.state.window_width < 1000
+					"
+				>
+					<div>
+						<div
+							style="
+								height: 70px;
+								background: var(--color-identity);
+							"
+						></div>
+						<ul>
+							<li
+								class="parent"
+								v-if="menumobile.title != ''"
+								@click="
+									menumobile.deep = 0;
+									menumobile.title = '';
+									menumobile.item = null;
+								"
+							>
+								<img
+									src="/img/fontawesome/angle-left.svg"
+									height="20"
+									width="20"
+									alt="ico"
+									style="opacity: 0.6"
+								/>
+								Retour
+							</li>
+							<li
+								class="parent"
+								v-if="menumobile.title2 != ''"
+								@click="
+									menumobile.deep = 1;
+									menumobile.title2 = '';
+									menumobile.item2 = null;
+								"
+							>
+								<img
+									src="/img/fontawesome/angle-left.svg"
+									height="20"
+									width="20"
+									alt="ico"
+									style="opacity: 0.6"
+								/>
+								Retour vers {{ menumobile.title }}
+							</li>
+
+							<li
+								class="parentLink"
+								v-if="menumobile.item && menumobile.deep === 1"
+							>
+								<a
+									:href="
+										menumobile.item.is_link
+											? menumobile.item.lien
+											: '#'
+									"
+								>
+									{{ menumobile.item.title }}
+								</a>
+							</li>
+							<li
+								class="parentLink"
+								v-else-if="
+									menumobile.item2 && menumobile.deep === 2
+								"
+							>
+								<a
+									:href="
+										menumobile.item.is_link
+											? `/${
+													menumobile.item.title
+											  }/${$utils.stringForUrl(
+													menumobile.item2.title
+											  )}`
+											: '#'
+									"
+								>
+									{{ menumobile.item2.title }}
+								</a>
+							</li>
+
+							<li
+								v-for="(item, index) in getLinksByLevel()"
+								:key="index"
+							>
+								<span
+									@click="setDeepTitle(item)"
+									v-if="
+										menumobile.deep !== 2 && !item.is_link
+									"
+								>
+									{{ item.title }}
+								</span>
+								<nuxt-link
+									class="nuxyLinkMenuMobile"
+									v-else-if="
+										menumobile.deep !== 2 && item.is_link
+									"
+									:to="item.lien"
+								>
+									{{ item.title }}
+								</nuxt-link>
+								<a
+									v-else
+									:href="
+										getDeepUrl(
+											menumobile.item.lien,
+											menumobile.item2.title,
+											item
+										)
+									"
+								>
+									{{ item.title }}
+								</a>
+								<img
+									src="/img/fontawesome/angle-right.svg"
+									height="20"
+									width="20"
+									alt="ico"
+									style="opacity: 0.6"
+									v-if="item.sub && item.sub.length"
+								/>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</header>
+
+			<div style="min-height: 100vh">
+				<Nuxt keep-alive :keep-alive-props="{ max: 10 }" />
+			</div>
+
+			<TheScrollUp></TheScrollUp>
+
+			<Cookies
+				color_one="var(--color-identity)"
+				color_two="white"
+			></Cookies>
+
+			<MessageToUser></MessageToUser>
+
+			<the-burger-menu-btn v-show="$store.state.window_width < 1000" />
+		</div>
+	</div>
+</template>
+
+<script>
+export default {
+	scrollToTop: true,
+	name: "default",
+	watch: {
+		"$store.state.showMenu": function () {
+			this.lock_unlockBG();
+		},
+	},
+	data() {
+		return {
+			menumobile: {
+				deep: 0,
+				title: "",
+				title2: "",
+				item: null,
+				item2: null,
+			},
+			nav: [
+				{
+					title: "Accueil",
+					lien: "/",
+					class: "accueil",
+					is_link: true,
+				},
+			
+				{
+					title: "Mairie",
+					lien: "/la-mairie",
+					is_link: null,
+					sub: [
+						{
+							title: "Conseil Municipal",
+							lien: "/la-mairie/conseil-municipal",
+							is_link: true,
+							sub: [
+								{ title: "Élus et commissions" },
+								{ title: "réunions & comptes-rendus" },
+								{
+									title: "Informations municipales et arrêtés",
+								},
+							],
+						},
+						{
+							title: "Secrétariat & démarches administratives",
+							lien: "/la-mairie/secretariat-demarches-administratives",
+							is_link: true,
+							sub: [
+								{ title: "Secrétariat de mairie / horaires" },
+								{ title: "Démarches administratives" },
+							],
+						},
+						{
+							title: "Agence communale postale",
+							lien: "/la-mairie/agence-communales-postale",
+							is_link: true,
+						},
+						{
+							title: "Urbanisme / travaux",
+							lien: "/la-mairie/urbanisme-travaux",
+							is_link: true,
+							sub: [
+								{ title: "Travaux sur la commune" },
+								{ title: "Démarches administratives" },
+							],
+						},
+						{
+							title: "Logements/terrain",
+							lien: "/la-mairie/logements-terrain",
+							is_link: true,
+						},
+						{
+							title: "Petites annonces",
+							lien: "/la-mairie/petites-annonces",
+							is_link: true,
+						},
+					],
+				},
+				{
+					title: "Vivre & s'installer",
+					lien: "/vivre-et-s-installer",
+					is_link: null,
+					sub: [
+						{
+							title: "Enfance et jeunesse",
+							lien: "/vivre-et-s-installer/enfance-et-jeunesse",
+							is_link: true,
+							sub: [
+								{ title: "École" },
+								{ title: "Cantine, garderie, périscolaire" },
+								{ title: "Garde d’enfants" },
+								{
+									title: "Activités (sport, loisirs, animations..)",
+								},
+							],
+						},
+						{
+							title: "Santé et solidarité",
+							lien: "/vivre-et-s-installer/sante-et-solidarite",
+							is_link: true,
+							sub: [
+								{ title: "Santé et paramédical" },
+								{ title: "CCAS" },
+								{ title: "Résidence St Jacques" },
+							],
+						},
+						{
+							title: "Vie économique",
+							lien: "/vivre-et-s-installer/vie-economique",
+							is_link: true,
+							sub: [
+								{ title: "Commerçants" },
+								{ title: "Artisans, savoir-faire" },
+								{ title: "Producteurs locaux" },
+								{ title: "Hébergement de vacances " },
+								{ title: "Services" },
+							],
+						},
+						{
+							title: "Vie associative",
+							lien: "/vivre-et-s-installer/vie-associative",
+							is_link: true,
+							sub: [
+								{ title: "Associations" },
+								{
+									title: "Calendrier des activités et manifestations",
+								},
+							],
+						},
+						{
+							title: "Environnement",
+							lien: "/vivre-et-s-installer/environnement",
+							is_link: null,
+							sub: [
+								{
+									title: "Urbanisme, PLU, déclaration préalable de travaux, permis de construire, règle en lotissement ",
+									is_link: true,
+								},
+								{
+									title: "Gestion des déchets, points de dépôts, tri sélectif, déchèterie à proximité",
+									is_link: true,
+								},
+								// { title: "Assainissement" },
+								// { title: "Fleurissement" },
+								// { title: "Eco-gestes de la commune" },
+							],
+						},
+						{
+							title: "Location de salle",
+							lien: "/vivre-et-s-installer/location-de-salle",
+							is_link: true,
+						},
+					],
+				},
+				{
+					title: "Patrimoine & loisirs",
+					lien: "/patrimoine-et-loisirs",
+					is_link: null,
+					sub: [
+						{
+							title: "Histoire",
+							lien: "",
+							is_link: true,
+							sub: [
+								{ title: "Hier" },
+								{ title: "Aujourd’hui" },
+								{ title: "Plus beaux villages", is_link: true },
+							],
+						},
+						{
+							title: "Patrimoine",
+							lien: "",
+							is_link: null,
+							sub: [
+								{
+									title: "La collégiale St pierre",
+									is_link: true,
+								},
+								{
+									title: "Histoire de la collégiale",
+									is_link: true,
+								},
+								{
+									title: "Village classé, petit patrimoine",
+									is_link: true,
+								},
+								{
+									title: "Le village des chats",
+									is_link: true,
+								},
+							],
+						},
+						{
+							title: "Nature et loisirs",
+							lien: "",
+							is_link: null,
+							sub: [
+								{
+									title: "Halte sur les chemins de Compostelle",
+									is_link: true,
+								},
+								{
+									title: "Sentiers de randonnées, de VTT",
+									is_link: true,
+								},
+								{
+									title: "Location de Vélos à assistance électrique",
+									is_link: true,
+								},
+								{
+									title: "Les jardins de Coursiana",
+									is_link: true,
+								},
+							],
+						},
+						{
+							title: "Où manger, où dormir",
+							lien: "",
+							is_link: true,
+							sub: [
+								{ title: "Hébergements de tourisme" },
+								{ title: "Gîte d’étape" },
+								{ title: "Camping" },
+								{ title: "Bar/Restaurants" },
+								{ title: "Producteurs Locaux" },
+							],
+						},
+					],
+				},
+				{
+					title: "Animations & agenda",
+					lien: "/animations-et-agenda",
+					is_link: null,
+					sub: [
+						{ title: "Grands rendez-vous​", is_link: true },
+						{ title: "Galeries/expositions", is_link: true },
+						{ title: "Manifestations / Actualités", is_link: true },
+					],
+				},
+				{
+					title: "Contact",
+					lien: "/contact",
+					is_link: null,
+					sub: [
+						{ title: "Mairie", is_link: true },
+						{ title: "Accueil Collégiale", is_link: true },
+					],
+				},
+			],
+		};
+	},
+
+	mounted() {
+		this.$nextTick(() => {
+			if (process.client) {
+				this.lookForPhoneSize();
+				window.addEventListener("resize", this.lookForPhoneSize);
+				window.addEventListener("scroll", this.handleScroll);
+
+				if (
+					document
+						.getElementsByTagName("body")[0]
+						.classList.contains("noOverflow")
+				) {
+					this.lock_unlockBG();
+				}
+				document.getElementsByTagName("body")[0].className =
+					this.$route.path.split("/").join("-");
+			}
+		});
+
+		this.$router.afterEach((to, from) => {
+			if (process.client) {
+				document.getElementsByTagName("body")[0].className =
+					this.$route.path.split("/").join("-");
+				// document.getElementsByTagName("body").classList.add(router. )
+			}
+			// to and from are both route objects.
+		});
+	},
+	methods: {
+		getLinksByLevel() {
+			switch (this.menumobile.deep) {
+				// case 0:
+				// 	return this.nav;
+				// 	break;
+				case 1:
+					return [...this.nav].filter(
+						(el) => el.title === this.menumobile.title
+					)[0].sub;
+					break;
+				case 2:
+					const level1 = [...this.nav].filter(
+						(el) => el.title === this.menumobile.title
+					)[0].sub;
+					const level2 = level1.filter(
+						(ela) => ela.title === this.menumobile.title2
+					)[0].sub;
+					return level2;
+					break;
+				default:
+					return this.nav;
+					break;
+			}
+		},
+		lookForPhoneSize(e) {
+			this.$store.commit("setWindowWidth", window.innerWidth);
+		},
+		lock_unlockBG() {
+			document
+				.getElementsByTagName("body")[0]
+				.classList.toggle("noOverflow");
+			document
+				.getElementsByTagName("html")[0]
+				.classList.toggle("noOverflow");
+		},
+		handleScroll(e) {
+			this.$store.commit("setWindowScrollPosition", window.scrollY);
+		},
+		getDeepUrl(lien_base, lien_sec, item) {
+			// determine si le lien à générer contient une ancre ou une sous page
+			if (!item.is_link) {
+				return `${lien_base}/${this.$utils.stringForUrl(
+					lien_sec
+				)}#${this.$utils.stringForUrl(item.title)}`;
+			} else {
+				return `${lien_base}/${this.$utils.stringForUrl(
+					lien_sec
+				)}/${this.$utils.stringForUrl(item.title)}`;
+			}
+		},
+		setDeepTitle(item) {
+			if (item.sub && item.sub.length && this.menumobile.deep < 2) {
+				this.menumobile.deep += 1;
+				if (this.menumobile.deep === 1) {
+					this.menumobile.title = item.title;
+					this.menumobile.item = item;
+				} else if (this.menumobile.deep === 2) {
+					this.menumobile.title2 = item.title;
+					this.menumobile.item2 = item;
+				}
+			}
+		},
+	},
+};
+</script>
+
+<style>
+/* barre de nav 50px */
+/* barre avec logo  130px + 4em */
+.headerNav {
+	background: #46474a;
+	position: sticky;
+	top: 0;
+	z-index: 250;
+}
+
+.headerNav > section {
+	padding: 2em;
+	width: calc(100% - 4em);
+	height: 130px;
+	display: flex;
+	justify-content: space-between;
+	transition: all 0.2s ease-in-out;
+}
+
+.headerNav.shrinkedhead > section {
+	padding: 0.5em 2em;
+	height: 30px;
+}
+
+.headerNav .reseauHead {
+	display: flex;
+	align-items: flex-end;
+	gap: 1rem;
+}
+
+.mainLogo,
+.noixStJ {
+	max-height: 100%;
+}
+
+.headerNav nav {
+	background: var(--text-col);
+	color: white;
+	height: 70px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2;
+	position: relative;
+	position: sticky;
+	top: 0;
+}
+
+.headerNav nav .mainLink {
+	text-transform: uppercase;
+	/* padding: 0 1.5em; */
+	position: relative;
+	transition: all 0.2s ease-in-out;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	font-weight: 600;
+}
+.headerNav nav .mainLink > * {
+	transition: all 0.2s ease-in-out;
+}
+.headerNav .nuxt-link-exact-active {
+	color: var(--color-identity);
+	opacity: 1;
+}
+
+.headerNav nav .mainLink > *:hover:not(a[aria-current="page"], div) {
+	background: var(--color-identity);
+	color: white;
+}
+
+.headerNav nav .mainLink.accesRapide {
+	border: 1px white solid;
+	border-radius: 25px;
+	height: 45px;
+	padding: 0 1.5em;
+	cursor: pointer;
+	transition: all 200ms ease-in-out;
+}
+.headerNav nav .mainLink.accesRapide:hover {
+	border-color: var(--color-identity);
+	color: var(--color-identity);
+	background-color: white;
+}
+
+.headerNav .mainLink > a {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 0 1.5em;
+}
+.headerNav .mainLink > p {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 0 1.5em;
+	cursor: pointer;
+}
+
+.headerNav .mainLink > a img {
+	margin: 0 10px;
+}
+
+.headerNav .mainLink > p img {
+	margin: 0 10px;
+}
+
+.headerNav .subSubLink,
+.headerNav .subLink {
+	display: none;
+	animation: menufade 0.3s ease;
+}
+
+@keyframes menufade {
+	from {
+		opacity: 0.5;
+		transform: translateY(-10px);
+		/* z-index: -100; */
+	}
+}
+
+.headerNav .mainLink:hover .subLink {
+	display: block;
+	position: absolute;
+	top: 100%;
+	background: var(--text-col);
+	width: 100%;
+	left: 10%;
+	min-width: 250px;
+}
+
+.sublinkItem {
+	transition: all 0.2s ease-in-out;
+	font-size: 0.9em;
+	position: relative;
+	
+}
+
+.subSubLink a:hover,
+.sublinkItem > *:hover:not(a[aria-current="page"], div) {
+	background: var(--color-identity);
+	color: white;
+	box-shadow: inset 0 0 0 1px var(--text-col);
+	
+}
+
+.sublinkItem > a {
+	padding: 0.5em 1em;
+	width: calc(100% - 2em);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+.sublinkItem > p {
+	padding: 0.5em 1em;
+	width: calc(100% - 2em);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: default;
+	width: 100%;
+}
+
+.sublinkItem:hover .subSubLink {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	left: 100%;
+	background: var(--text-col);
+	width: 100%;
+	min-width: 250px;
+	z-index: 1;
+}
+
+.subSubLink a {
+	padding: 0.25em 1em;
+	font-size: 0.9em;
+}
+
+/* ********************************************************************************* */
+.btnSearch {
+	position: fixed;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 0;
+	background-color: var(--color-identity);
+	padding: 0.7em 0.8em;
+	z-index: 2;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	opacity: 0.9;
+	transition: all 0.2s ease-in-out;
+
+	cursor: pointer;
+}
+
+.btnSearch:hover {
+	opacity: 1;
+	padding: 0.7em 1.4em;
+}
+
+.homeLogo.nuxt-link-exact-active {
+	opacity: 1;
+}
+.homeLogo {
+	text-align: center;
+}
+.homeLogo img {
+	width: 95%;
+}
+.globalAR {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: 800;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.globalAR .AccesRapide {
+	width: 100%;
+}
+
+.globalAR .site_title {
+	color: #eee;
+}
+
+.nuxyLinkMenuMobile {
+	background-color: transparent !important;
+	color: var(--text-col) !important;
+}
+
+.reseauHead i {
+	transition: all 200ms ease-in-out;
+	color: white;
+	font-size: 1.2rem;
+}
+.reseauHead a:hover i {
+	transform: scale(1.1);
+}
+
+.reseauHead a:hover .fa-facebook-f {
+	color: hsl(221, 43%, 41%);
+}
+
+.reseauHead a:hover .fa-instagram {
+	color: #dc2743;
+}
+.reseauHead a:hover .fa-twitter {
+	color: hsl(197, 99%, 47%);
+}
+.reseauHead a:hover .fa-youtube {
+	color: hsl(0, 99%, 50%);
+}
+
+.reseauHead a:hover .fa-globe {
+	color: hsl(113, 91%, 23%);
+}
+.reseauHead a:hover .fa-envelope {
+	color: hsl(5, 80%, 56%);
+}
+
+@keyframes animRapidAcess {
+	from {
+		transform: translateY(-50px);
+	}
+}
+
+@media all and (max-width: 1750px) {
+	.headerNav nav .mainLink > a,
+	.headerNav nav .mainLink > p {
+		padding: 0 1em;
+	}
+}
+
+@media all and (max-width: 1500px) {
+	.headerNav > section {
+		height: 60px;
+		padding: 1em 2em;
+	}
+
+	.headerNav nav {
+		justify-content: space-between;
+		padding: 0 var(--container-space);
+		height: 50px;
+	}
+
+	.headerNav nav .mainLink.accesRapide {
+		height: 33px;
+	}
+
+	.headerNav nav .mainLink > a,
+	.headerNav nav .mainLink > p {
+		font-size: 0.9em;
+		padding: 0 0.5em;
+	}
+
+	.headerNav nav .mainLink.accesRapide {
+		padding: 0 1em;
+		font-size: 0.9em;
+	}
+}
+
+@media all and (max-width: 1200px) {
+	.headerNav .mainLink > a img,
+	.headerNav .mainLink > p img {
+		margin: 0 5px;
+		width: 15px;
+		height: 15px;
+	}
+
+	.headerNav nav .mainLink > a,
+	.headerNav nav .mainLink > p {
+		padding-left: 0;
+		font-size: 0.8em;
+	}
+}
+
+@media all and (max-width: 1000px) {
+	.headerNav nav.menu_pc {
+		display: none;
+	}
+}
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/* .headerNav nav.menu_mobile {
+	display: none;
+} */
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+@media all and (max-width: 1000px) {
+	.headerNav > section {
+		height: 30px;
+		position: relative;
+		z-index: 11;
+		background: var(--text-col);
+	}
+
+	.headerNav nav.menu_mobile {
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 100%;
+		bottom: 0;
+		z-index: 40;
+		width: 400px;
+		max-width: 100%;
+		background: white;
+		color: var(--text-col);
+		padding: 0;
+		overflow: auto;
+	}
+
+	.headerNav nav.menu_mobile > div {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		width: 100%;
+		height: 100%;
+		/* background: var(--color-identity-50); */
+	}
+
+	.menu_mobile ul {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		background: white;
+	}
+
+	.menu_mobile li {
+		list-style-type: none;
+		padding: 0 2em;
+		border-left: 10px solid var(--color-identity);
+		width: calc(100% - 4em - 10px);
+		height: 55px;
+		position: relative;
+		border-bottom: 1px solid var(--color-identity);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		text-transform: uppercase;
+		font-weight: 600;
+	}
+
+	.menu_mobile li span,
+	.menu_mobile li a {
+		height: 100%;
+		flex: 1;
+		display: flex;
+		align-items: center;
+	}
+
+	.menu_mobile .menu_footer {
+		background: var(--text-col);
+		padding: 1em;
+		margin-top: auto;
+		color: white;
+	}
+
+	.menu_mobile .menu_footer .site_title {
+		font-size: 1em;
+		color: white;
+		text-transform: uppercase;
+	}
+
+	.menu_footer .ARbtn {
+		padding: 0.25em 0;
+		font-size: 0.7em;
+		flex: 1 1 19%;
+		max-width: 50%;
+		margin: 2px;
+		height: 60px;
+		color: var(--text-col);
+	}
+
+	.menu_footer .ARbtn img {
+		width: 30px;
+		height: 30px;
+		padding-bottom: 0;
+	}
+
+	.menu_footer .AccesRapide .site_container {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+	}
+
+	.menu_mobile .parent {
+		background: var(--color-identity-75);
+	}
+
+	.menu_mobile .parent:nth-child(even) {
+		background: var(--color-identity-50);
+	}
+
+	.menu_mobile .parentLink {
+		font-weight: 800;
+	}
+
+	.bkgMenuMonile {
+		background: #0009;
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		z-index: 8;
+	}
+}
+.fade-from-top-enter-active,
+.fade-from-top-leave-active {
+	transition: all 200ms ease-in-out;
+}
+.fade-from-top-enter,
+.fade-from-top-leave-to {
+	transform: translateY(-100%);
+	opacity: 0;
+}
+</style>

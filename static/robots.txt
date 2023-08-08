@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://tourisme.gers.com/sitemap.xml
